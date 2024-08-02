@@ -19,7 +19,7 @@ jobs:
       - name: Install crypto-js
         run: npm install crypto-js
       - name: Debug
-        run: echo "Using Cloudflare Account ID: ${{ secrets.CF_TEST }}"
+        run: echo ${{ secrets.CF_ACCOUNT_ID }}
       - name: Build & Deploy Worker
         uses: cloudflare/wrangler-action@v3
         with:
