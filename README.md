@@ -53,3 +53,7 @@ wrangler deploy
 📣 Keep up with the latest developments by joining our vibrant community:
 
 [![Discord Channel](https://img.shields.io/static/v1?label=Join&message=Discord%20Channel&color=black&style=for-the-badge&logo=discord&logoColor=black)](https://discord.gg/cwDTVKyKJz)
+
+> [!Note]
+> - 💼 This is an edited version of the AnimeDexApi repo by TechShreyash.
+> - 🌱 Currently in a state that works.
