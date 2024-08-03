@@ -10,6 +10,10 @@
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/junioralive/JAnimeAPI)
 
+## 🔍 Deploy Tutorial
+
+https://github.com/user-attachments/assets/f4075e82-b8cf-420e-b3ac-c0674b793f66
+
 ## ☁️ Deploy To Cloudflare (Manual Method)
 
 - 🛠 **Set Up Environment**:
