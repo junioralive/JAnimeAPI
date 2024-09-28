@@ -215,10 +215,7 @@ async function GogoDLScrapper(animeid, cookie) {
             const a = secondBody(link);
             const linkText = a.text().trim();
             const downloadUrl = a.attr("href").trim();
-
-            // let resolution = linkText.replace("Download(", "").replace("- mp4)", "").trim();
-            let resolution = resolutionText.match(/\((.*?)\)/)?.[1];
-
+            let resolution = linkText.replace("Download(", "").replace("- mp4)", "").trim();
             if (resolution && downloadUrl) {
                 data[resolution] = downloadUrl;
             }
