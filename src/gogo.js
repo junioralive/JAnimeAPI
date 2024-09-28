@@ -2,7 +2,7 @@ import {
     generateEncryptAjaxParameters,
     decryptEncryptAjaxResponse,
 } from "./gogo_extractor.js";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 
 const BaseURL = "https://gogoanime3.co";
 const USER_AGENT =
