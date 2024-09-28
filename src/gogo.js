@@ -2,7 +2,7 @@ import {
     generateEncryptAjaxParameters,
     decryptEncryptAjaxResponse,
 } from "./gogo_extractor.js";
-import * as cheerio from "cheerio";
+import cheerio from "cheerio";
 
 const BaseURL = "https://gogoanime3.co";
 const USER_AGENT =
@@ -201,31 +201,19 @@ async function GogoDLScrapper(animeid, cookie) {
             },
         });
         const html = await response.text();
+        const cheerio = require("cheerio");
         const body = cheerio.load(html);
-        const downloadAnimeLink = body("div.download-anime .favorites_book .dowloads a").attr("href");
-        if (!downloadAnimeLink) {
-            throw new Error("Download link not found on initial page.");
-        }
-        const secondResponse = await fetch(downloadAnimeLink);
-        const secondHtml = await secondResponse.text();
-        const secondBody = cheerio.load(secondHtml);
         let data = {};
-        const downloadLinks = secondBody("div.mirror_link .dowload a");
-        downloadLinks.each((i, link) => {
-            const a = secondBody(link);
-            const linkText = a.text().trim();
-            const downloadUrl = a.attr("href").trim();
-            let resolution = linkText.replace("Download(", "").replace("- mp4)", "").trim();
-            if (resolution && downloadUrl) {
-                data[resolution] = downloadUrl;
-            }
+        const links = body("div.cf-download").find("a");
+        links.each((i, link) => {
+            const a = body(link);
+            data[a.text().trim()] = a.attr("href").trim();
         });
-        return { results: data };
+        return data;
     } catch (e) {
-        return { error: e.message };
+        return e;
     }
 }
-
 
 async function getGogoAuthKey() {
     const response = await fetch(
