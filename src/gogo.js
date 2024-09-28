@@ -207,7 +207,7 @@ async function GogoDLScrapper(animeid, cookie) {
         const links = body("div.cf-download").find("a");
         links.each((i, link) => {
             const a = body(link);
-            data[a.text().trim()] = a.attr("href").trim();
+            data[a.text().trim()] = a.attr("href").replace("gredirect.info", "ggredi.info").trim();
         });
         return data;
     } catch (e) {
