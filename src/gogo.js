@@ -202,22 +202,33 @@ async function GogoDLScrapper(animeid, cookie) {
         });
         const html = await response.text();
         const body = cheerio.load(html);
+        const downloadAnimeLink = body("div.download-anime .favorites_book .dowloads a").attr("href");
+        if (!downloadAnimeLink) {
+            throw new Error("Download link not found on initial page.");
+        }
+        const secondResponse = await fetch(downloadAnimeLink);
+        const secondHtml = await secondResponse.text();
+        const secondBody = cheerio.load(secondHtml);
         let data = {};
-        const downloadLinks = body("div.mirror_link .dowload a");
+        const downloadLinks = secondBody("div.mirror_link .dowload a");
         downloadLinks.each((i, link) => {
-            const a = body(link);
-            const resolutionText = a.text().trim();
+            const a = secondBody(link);
+            const linkText = a.text().trim();
             const downloadUrl = a.attr("href").trim();
-            const resolution = resolutionText.match(/\((.*?)\)/)?.[1];
-            if (resolution) {
+
+            // let resolution = linkText.replace("Download(", "").replace("- mp4)", "").trim();
+            let resolution = resolutionText.match(/\((.*?)\)/)?.[1];
+
+            if (resolution && downloadUrl) {
                 data[resolution] = downloadUrl;
             }
         });
-        return data;
+        return { results: data };
     } catch (e) {
         return { error: e.message };
     }
 }
+
 
 async function getGogoAuthKey() {
     const response = await fetch(
