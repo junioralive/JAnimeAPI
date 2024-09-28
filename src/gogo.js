@@ -201,17 +201,21 @@ async function GogoDLScrapper(animeid, cookie) {
             },
         });
         const html = await response.text();
-        // const cheerio = require("cheerio");
         const body = cheerio.load(html);
         let data = {};
-        const links = body("div.cf-download").find("a");
-        links.each((i, link) => {
+        const downloadLinks = body("div.mirror_link .dowload a");
+        downloadLinks.each((i, link) => {
             const a = body(link);
-            data[a.text().trim()] = a.attr("href").trim();
+            const resolutionText = a.text().trim();
+            const downloadUrl = a.attr("href").trim();
+            const resolution = resolutionText.match(/\((.*?)\)/)?.[1];
+            if (resolution) {
+                data[resolution] = downloadUrl;
+            }
         });
         return data;
     } catch (e) {
-        return e;
+        return { error: e.message };
     }
 }
 
